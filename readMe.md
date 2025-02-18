@@ -47,7 +47,7 @@ Hilt simplifies dependency injection by automatically generating and managing de
         }
       ```
 
-NOTE: make sure you Hilt gradle dependency and kotlin version sync with each other, for convience i know that 2.44 hilt version work perfectly with kotlin 1.7.20 (with latest AGP & GV)
+NOTE: make sure you Hilt gradle dependency and kotlin version sync with each other, ----------
 
 2. **Define Hilt Modules:**
     - Create modules (using `@Module` and `@InstallIn`) to provide instances of Retrofit, OkHttpClient, and other network-related dependencies.
