@@ -1,6 +1,11 @@
 package com.pahadi.composenewsapp.di
 
+import android.app.Application
+import androidx.room.Room
 import com.pahadi.composenewsapp.Util.Const
+import com.pahadi.composenewsapp.database.AppDatabaseService
+import com.pahadi.composenewsapp.database.ArticleDatabase
+import com.pahadi.composenewsapp.database.DatabaseService
 import com.pahadi.composenewsapp.network.ApiInterface
 import com.pahadi.composenewsapp.network.ApiKeyInterceptor
 import dagger.Module
@@ -48,6 +53,30 @@ class ApplicationModule {
             .addConverterFactory(gsonFactory)
             .build()
             .create(ApiInterface::class.java)
+    }
+    @DbName
+    @Provides
+    fun provideDbName(): String = Const.DB_NAME
+
+    @Singleton
+    @Provides
+    fun provideArticleDatabase(
+        application: Application,
+        @DbName dbName: String
+    ): ArticleDatabase{
+        return Room.databaseBuilder(
+            application,
+            ArticleDatabase::class.java,
+            dbName
+        )
+            .build()
+    }
+
+
+    @Singleton
+    @Provides
+    fun provideDatabaseService(articleDatabase: ArticleDatabase): DatabaseService{
+        return AppDatabaseService(articleDatabase)
     }
 
 }
