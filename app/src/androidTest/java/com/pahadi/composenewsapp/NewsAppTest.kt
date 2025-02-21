@@ -2,12 +2,10 @@ package com.pahadi.composenewsapp
 
 import com.pahadi.composenewsapp.model.ApiArticle
 import com.pahadi.composenewsapp.model.News
-import com.pahadi.composenewsapp.model.Source
 import com.pahadi.composenewsapp.network.ApiInterface
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertEquals
 import org.junit.Test
-import org.junit.runner.RunWith
+
 //import org.mockito.Mock
 //import org.mockito.Mockito
 //import org.mockito.junit.MockitoJUnitRunner
