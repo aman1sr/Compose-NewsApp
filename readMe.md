@@ -4,8 +4,9 @@
 This sample project serves as a hands-on playground to understand the integration of Retrofit, OkHttp, and Hilt in modern Android development.
 [Special Thanks : khush panchal](https://github.com/khushpanchal/NewsApp/tree/master)
 
-
-![Sample GIF](https://images.template.net/148779/android-skate-animated-stickers-zyjtb.gif)
+<p align="center">
+  <img src="https://images.template.net/148779/android-skate-animated-stickers-zyjtb.gif" style="width:30%;">
+</p>
 
 ## PlayGround Branches
 -  feature_retrofit_hilt -> Network calling using Retrofit and Hilt
