@@ -2,9 +2,11 @@ package com.pahadi.composenewsapp.repository
 
 import com.pahadi.composenewsapp.Util.Const.DEFAULT_PAGE_NUM
 import com.pahadi.composenewsapp.common.apiArticleListToArticleList
+import com.pahadi.composenewsapp.database.DatabaseService
 import com.pahadi.composenewsapp.database.entity.Article
 import com.pahadi.composenewsapp.network.ApiInterface
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -14,18 +16,25 @@ import javax.inject.Singleton
 * */
 @Singleton
 class NewsRepository @Inject constructor(
-    private val network: ApiInterface
+    private val network: ApiInterface,
+    private val database: DatabaseService
 ) {
-    suspend fun getNewsByCountry(       // todo: update it wrt offline caching
+    suspend fun getNewsByCountry(
         countryCode: String,
         pageNumber: Int = DEFAULT_PAGE_NUM
-    ): Flow<List<Article>> = flow {
+    ): Flow<List<Article>> = flow {//todo: visualize flow builder
         emit(
             network.getNews(
                 countryCode,
                 pageNum = pageNumber
             ).articles.apiArticleListToArticleList()
         )
+    }.flatMapConcat { articles ->
+        flow {
+            emit(database.deleteAllAndInsertAll(articles))
+        }
+    }.flatMapConcat {
+        database.getAllArticles()
     }
 
 }

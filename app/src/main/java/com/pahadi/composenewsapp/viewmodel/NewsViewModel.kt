@@ -8,9 +8,11 @@ import com.pahadi.composenewsapp.base.UIState
 import com.pahadi.composenewsapp.database.entity.Article
 import com.pahadi.composenewsapp.repository.NewsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,15 +28,17 @@ class NewsViewModel @Inject constructor(
     }
 
      fun fetchNewsbyCountry(countryId: String?) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             _newsItem.emit(UIState.Loading)
             val response = newsRepository.getNewsByCountry(
                 countryId ?: Const.DEFAULT_COUNTRY,
                 pageNumber = pageNum
             )
             response.collect {
-                _newsItem.emit(UIState.Success(it))
-                Log.d("News_d", "fetchNewsbyCountry: ${it}")
+                withContext(Dispatchers.Main){
+                    _newsItem.emit(UIState.Success(it))
+                    Log.d("News_d", "fetchNewsbyCountry: ${it}")
+                }
             }
 
         }
