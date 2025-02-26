@@ -6,7 +6,7 @@ import com.pahadi.composenewsapp.database.entity.Source
 data class ApiArticle(
 
     @SerializedName("source")
-    val source: Source,         // todo: update source Model later
+    val source: Source,
 
     @SerializedName("author")
     val author: String?,

@@ -1,5 +1,8 @@
 package com.pahadi.composenewsapp.base
 
+import android.view.ViewGroup
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,6 +27,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import com.pahadi.composenewsapp.R
 
 @Composable
@@ -84,3 +88,23 @@ fun ShowError(
     }
 }
 
+@Composable
+fun WebViewPage(
+    url: String,
+    modifier: Modifier = Modifier
+) {
+    AndroidView(factory = {
+        WebView(it).apply {
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            webViewClient = WebViewClient()
+            loadUrl(url)
+        }
+    }, update = {
+        it.loadUrl(url)
+    },
+        modifier = modifier
+        )
+}
