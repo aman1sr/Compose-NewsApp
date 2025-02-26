@@ -15,7 +15,7 @@ import javax.inject.Singleton
 * todo: https://developer.android.com/topic/architecture/data-layer/offline-first#exposing-resources
 * */
 @Singleton
-class NewsRepository @Inject constructor(
+class NewsRepository @Inject constructor(       // When you annotate a class with @Inject in its constructor, Hilt recognizes that it can provide instances of this class wherever it is needed in the dependency graph.
     private val network: ApiInterface,
     private val database: DatabaseService
 ) {
