@@ -30,7 +30,7 @@ import com.pahadi.composenewsapp.viewmodel.NewsViewModel
 @Composable
 fun NewsScreen(
     newsViewModel: NewsViewModel = hiltViewModel(),
-    modifier: Modifier
+    newsClicked: @Composable (Article) -> Unit
 ) {
     val newsUiState: UIState<List<Article>> by newsViewModel.newsItem.collectAsStateWithLifecycle()
     var isRefreshing by rememberSaveable {
@@ -42,7 +42,7 @@ fun NewsScreen(
     })
 
     Box(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
             .pullRefresh(pullRefreshState)
         ,
